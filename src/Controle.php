@@ -4,18 +4,21 @@ header('Content-Type: application/json');
 include_once("MyAccessBDD.php");
 
 /**
- * Contrôleur : reçoit et traite les demandes du point d'entrée
+ * Contrôleur de l'API
+ * Reçoit les demandes du point d'entrée (index.php), sollicite la couche d'accès aux données,
+ * et retourne une réponse formatée en JSON au client.
  */
 class Controle{
 	
     /**
-     * 
+     * Instance de la couche d'accès aux données spécifique
      * @var MyAccessBDD
      */
     private $myAaccessBDD;
 
     /**
      * constructeur : récupère l'instance d'accès à la BDD
+     * En cas d'échec de connexion, retourne une erreur 500 et arrête l'exécution.
      */
     public function __construct(){
         try{
@@ -29,10 +32,10 @@ class Controle{
     /**
      * réception d'une demande de requête
      * demande de traiter la requête puis demande d'afficher la réponse
-     * @param string $methodeHTTP
-     * @param string $table
-     * @param string|null $id
-     * @param array|null $champs
+     * @param string $methodeHTTP Verbe HTTP utilisé (GET, POST, PUT, DELETE)
+     * @param string $table Nom de la table ciblée
+     * @param string|null $id Identifiant de la ressource (optionnel)
+     * @param array|null $champs Données envoyées dans le corps de la requête
      */
     public function demande(string $methodeHTTP, string $table, ?string $id, ?array $champs){
         $result = $this->myAaccessBDD->demande($methodeHTTP, $table, $id, $champs);
@@ -68,8 +71,8 @@ class Controle{
     }
 	
     /**
-     * authentification incorrecte
-     * demande d'afficher un messaage d'erreur
+     * Gère les erreurs d'authentification
+     * demande d'afficher un message d'erreur
      */
     public function unauthorized(){
         $this->reponse(401, "authentification incorrecte");

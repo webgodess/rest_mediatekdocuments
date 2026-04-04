@@ -9,23 +9,24 @@
 class Connexion {
 
     /**
-     * 
-     * @var Connexion
+     * Instance unique de la classe Connexion
+     * @var Connexion | null
      */
     private static $instance = null;
     /**
-     * 
-     * @var \PDO
+     * Objet de connexion PDO
+     * @var \PDO|null
      */
     private $conn = null;
 
     /**
      * constructeur privé : connexion à la BDD
-     * @param string $login 
-     * @param string $pwd
-     * @param string $bd
-     * @param string $server
-     * @param string $port
+     * @param string $login Nom d'utilisateur BDD
+     * @param string $pwd   Mot de Passe BDD
+     * @param string $bd    Nom de la base de données
+     * @param string $server Adresse du serveur
+     * @param string $port  Port de connexion
+     * @throws \Exception     Lève une exception en cas d'échec de connexion
      */
     private function __construct(string $login, string $pwd, string $bd, string $server, string $port){
         try {
@@ -36,14 +37,14 @@ class Connexion {
         }
     }
     
-    /**
-     * méthode statique de création de l'instance unique
-     * @param string $login
-     * @param string $pwd
-     * @param string $bd
-     * @param string $server
-     * @param string $port
-     * @return Connexion instance unique de la classe
+   /**
+     * Méthode statique de création ou de récupération de l'instance unique (Singleton)
+     * @param string $login   Nom d'utilisateur BDD
+     * @param string $pwd     Mot de passe BDD
+     * @param string $bd      Nom de la base de données
+     * @param string $server  Adresse du serveur
+     * @param string $port    Port de connexion
+     * @return Connexion      L'instance unique de la classe
      */
     public static function getInstance(string $login, string $pwd, string $bd, string $server, string $port) : Connexion{
         if(self::$instance === null){

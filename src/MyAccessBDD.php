@@ -14,6 +14,7 @@ class MyAccessBDD extends AccessBDD {
 	    
     /**
      * constructeur qui appelle celui de la classe mère
+     * pour initialiser la connexion PDO.
      */
     public function __construct(){
         try{
@@ -24,8 +25,8 @@ class MyAccessBDD extends AccessBDD {
     }
 
     /**
-     * demande de recherche
-     * @param string $table
+     * Oriente la demande de recherche vers la méthode SQL appropriée
+     * @param string $table Nom de la table ou type d'entité demandée.
      * @param array|null $champs nom et valeur de chaque champ
      * @return array|null tuples du résultat de la requête ou null si erreur
      * @override
@@ -55,8 +56,8 @@ class MyAccessBDD extends AccessBDD {
     }
 
     /**
-     * demande d'ajout (insert)
-     * @param string $table
+     * Oriente la demande d'insertion vers la méthode SQL appropriée.
+     * @param string $table Nom de la table.
      * @param array|null $champs nom et valeur de chaque champ
      * @return int|null nombre de tuples ajoutés ou null si erreur
      * @override
@@ -72,9 +73,9 @@ class MyAccessBDD extends AccessBDD {
     }
     
     /**
-     * demande de modification (update)
-     * @param string $table
-     * @param string|null $id
+     * Oriente la demande de mise à jour vers la méthode SQL appropriée.
+     * @param string $table Nom de la table.
+     * @param string|null $id Identifiant de la ligne à modifier.
      * @param array|null $champs nom et valeur de chaque champ
      * @return int|null nombre de tuples modifiés ou null si erreur
      * @override
@@ -90,8 +91,8 @@ class MyAccessBDD extends AccessBDD {
     }  
     
     /**
-     * demande de suppression (delete)
-     * @param string $table
+     * Oriente la demande de suppression vers la méthode SQL appropriée.
+     * @param string $table Nom de la table.
      * @param array|null $champs nom et valeur de chaque champ
      * @return int|null nombre de tuples supprimés ou null si erreur
      * @override
@@ -108,8 +109,8 @@ class MyAccessBDD extends AccessBDD {
         
     /**
      * récupère les tuples d'une seule table
-     * @param string $table
-     * @param array|null $champs
+     * @param string $table Nom de la table.
+     * @param array|null $champs Filtres WHERE optionnels.
      * @return array|null 
      */
     private function selectTuplesOneTable(string $table, ?array $champs) : ?array{
@@ -130,9 +131,9 @@ class MyAccessBDD extends AccessBDD {
     }	
 
     /**
-     * demande d'ajout (insert) d'un tuple dans une table
-     * @param string $table
-     * @param array|null $champs
+     * Oriente la demande d'ajout d'un tuple dans une table
+     * @param string $table Nom de la table
+     * @param array|null $champs Colonnes et valeurs à insérer.
      * @return int|null nombre de tuples ajoutés (0 ou 1) ou null si erreur
      */	
     private function insertOneTupleOneTable(string $table, ?array $champs) : ?int{
@@ -157,7 +158,7 @@ class MyAccessBDD extends AccessBDD {
     }
 
     /**
-     * demande de modification (update) d'un tuple dans une table
+     * Oriente la demande de modification d'un tuple dans une table
      * @param string $table
      * @param string\null $id
      * @param array|null $champs 
@@ -183,7 +184,7 @@ class MyAccessBDD extends AccessBDD {
     }
     
     /**
-     * demande de suppression (delete) d'un ou plusieurs tuples dans une table
+     * Oriente la demande de suppression d'un ou plusieurs tuples dans une table
      * @param string $table
      * @param array|null $champs
      * @return int|null nombre de tuples supprimés ou null si erreur
@@ -204,7 +205,7 @@ class MyAccessBDD extends AccessBDD {
  
     /**
      * récupère toutes les lignes d'une table simple (qui contient juste id et libelle)
-     * @param string $table
+     * @param string $table Nom de la table.
      * @return array|null
      */
     private function selectTableSimple(string $table) : ?array{

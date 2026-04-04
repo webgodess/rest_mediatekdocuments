@@ -9,7 +9,7 @@ include_once("Connexion.php");
 abstract class AccessBDD {
 	
     /**
-     * 
+     * Instance de la connexion à la base de données
      * @var Connexion
      */
     protected $conn = null;	
@@ -17,6 +17,7 @@ abstract class AccessBDD {
     /**
      * constructeur : récupère les variables d'environnement 
      * et récupère l'instance de connexion à la BDD
+     * @throws Exception En cas d'erreur de connexion à la base de données
      */
     protected function __construct(){
         try{
@@ -34,12 +35,13 @@ abstract class AccessBDD {
     }
     
     /**
-     * demande de traitement de la demande
-     * @param string $methodeHTTP
-     * @param string $table
-     * @param string|null $id
-     * @param array|null $champs
-     * @return array|int|null
+     * Point d'entrée pour traiter les demandes de données
+     * Oriente vers la méthode de traitement spécifique selon le verbe HTTP
+     * @param string $methodeHTTP La méthode HTTP (GET, POST, PUT, DELETE)
+     * @param string $table Le nom de la table concernée
+     * @param string|null $id L'identifiant de la ressource (optionnel)
+     * @param array|null $champs Liste des champs et valeurs à traiter
+     * @return array|int|null Retourne un tableau de résultats (GET), un entier (ID inséré ou lignes impactées), ou null en cas d'échec
      */
     public function demande(string $methodeHTTP, string $table, ?string $id, ?array $champs) : array|int|null {
         if(is_null($this->conn)){
