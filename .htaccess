@@ -1,4 +1,6 @@
 RewriteEngine on
+RewriteCond %{HTTP:Authorization} ^(.+)$
+RewriteRule ^(.*)$ - [E=HTTP_AUTHORIZATION:%1]
 # Si la requete n'a pas de parametres, rediriger avec une erreur 400
 RewriteRule ^$ - [R=400,L]
 RewriteCond %{REQUEST_METHOD} =GET
@@ -9,7 +11,7 @@ RewriteCond %{REQUEST_METHOD} =POST
 RewriteRule ^([a-zA-Z0-9_]+)$ src/index.php?table=$1 [B,L]
 RewriteCond %{REQUEST_METHOD} =PUT
 RewriteRule ^([a-zA-Z0-9_]+)$ src/index.php?table=$1 [B,L]
-RewriteCond %{REQUEST_METHOD} =PUTs
+RewriteCond %{REQUEST_METHOD} =PUT
 RewriteRule ^([a-zA-Z0-9_]+)/([a-zA-Z0-9]+)$ src/index.php?table=$1&id=$2 [B,L]
 RewriteCond %{REQUEST_METHOD} =DELETE
 RewriteRule ^([a-zA-Z0-9_]+)$ src/index.php?table=$1 [B,L]
